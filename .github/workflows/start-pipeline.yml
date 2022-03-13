@@ -1,0 +1,19 @@
+name: Start Pipeline
+
+on: 
+  workflow_dispatch:
+    inputs:
+      release_type:
+        required: true
+        default: dev
+        type: choice
+        options:
+        - patch
+        - minor
+        - major
+
+jobs:
+  call-sub-workflow:
+    uses: mbongard/workflow-call-issue/.github/workflows/sub-workflow.yml@main
+    with:
+      release_type: ${{ github.event.inputs.release_type }}
